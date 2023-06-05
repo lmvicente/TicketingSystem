@@ -1,0 +1,95 @@
+﻿@page
+@model TicketingSystem.Pages.TicketHistory.TicketsViewModel
+
+@{
+    ViewData["Title"] = "TicketsView";
+}
+
+<style>
+    .text-bg-high{
+        background-color: #ed6a45;
+    }
+</style>
+
+<h1>TicketsView</h1>
+
+<p>
+    <a asp-page="CreateTicket">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AllTickets[0].CreateDate)*@
+                Create Date
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AllTickets[0].Title)*@
+                Subject
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AllTickets[0].Summary)*@
+                Summary
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AllTickets[0].ClosedDate)*@
+                Date Closed
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AllTickets[0].TechName)*@
+                Assigned To
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AllTickets[0].Priority)*@
+                Priority
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model.AllTickets) {
+            <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Summary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClosedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TechName)
+            </td>
+            <td>
+                    @{
+                        switch(item.Priority)
+                        {
+                            case "Low":
+                                <div class="badge text-bg-secondary">@item.Priority</div>
+                                break;
+                            case "Medium":
+                                <div class="badge text-bg-warning">@item.Priority</div>
+                                break;
+                            case "High":
+                                <div class="badge text-bg-high">@item.Priority</div>
+                                break;
+                            case "Critical":
+                                <div class="badge text-bg-danger">@item.Priority</div>
+                                break;
+                        }
+                    }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.TicketID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.TicketID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.TicketID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
